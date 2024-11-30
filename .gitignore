@@ -1,0 +1,43 @@
+# Python Bytecode files
+*.pyc
+*.pyo
+__pycache__
+
+# Flask instance files
+instance/
+
+# Flask config files
+*.env
+*.flaskenv
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.flaskenv
+
+# IDE files
+.vscode/
+.idea/
+
+# MacOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+
+# Logs
+*.log
+
+# SQLite database file (if you're using SQLite for development)
+*.db
+
+# MyPy type checking
+.mypy_cache/
+
+# Pytest cache
+.pytest_cache/
+
+# Pylint reports
+pylint-report.txt
