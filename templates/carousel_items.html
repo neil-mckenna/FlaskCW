@@ -1,194 +1,48 @@
-<!-- Carousel Item 1 -->
-<div class="bg-white shadow-lg rounded-lg p-4 min-w-[250px]">
-  <div class="flex flex-col">
-    <!-- title -->
-    <div class="flex justify-between items-center mb-2">
-      <h2 class="text-lg font-semibold">Final Fantasy 7 Remake</h2>
-    </div>
-    <!-- Image -->
-    <img src="{{ url_for('static', filename='images/FF7.jpg') }}" alt="Final Fantasy 7 Remake cover art" class="h-48 w-full object-cover rounded-lg mb-4">
-    <!-- Score -->
-    <div class="flex justify-between items-center mb-2">
-      <h3 class="text-black text-xl font-bold" aria-label="Review Score">Review Score: <span class="text-yellow-500" aria-label="9.2">9.2</span> (Excellent)</h3>
-    </div>
-    <!-- Platform -->
-    <div class="flex justify-between items-center mb-2">
-      <p class="text-gray-700 text-sm" aria-label="Platforms">Platforms: PS4, PS5, Windows</p>
-    </div>
-    <!-- Review extract -->
-    <p class="text-gray-700 mt-2 mb-4">This item is a brief description that provides context about the image and its significance in the collection. It is important to understand the value it adds.</p>
-    <!-- Read More Link -->
-    <a href="#" class="text-blue-500 hover:underline mt-2 inline-block" aria-label="Read more about Final Fantasy 7 Remake">Read more</a>
-  </div>
-</div>
+<div class="container mx-auto p-4">
+  <!-- Game Cards Container -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+    {% for game in games %}
+      <!-- Card -->
+      <div class="bg-white shadow-lg rounded-lg p-4">
+        <!-- Image -->
+        <img src="{{ url_for('static', filename='images/' + game.image) }}" alt="{{ game.name }} cover art" class="w-full h-48 object-cover rounded-lg mb-4">
 
-<!-- Carousel Item 2 -->
-<div class="bg-white shadow-lg rounded-lg p-4 min-w-[250px]">
-  <div class="flex flex-col">
-    <!-- title -->
-    <div class="flex justify-between items-center mb-2">
-      <h2 class="text-lg font-semibold">Elden Ring</h2>
-    </div>
-    <!-- Image -->
-    <img src="{{ url_for('static', filename='images/EldenRing.jpg') }}" alt="Elden Ring cover art" class="h-48 w-full object-cover rounded-lg mb-4">
-    <!-- Score -->
-    <div class="flex justify-between items-center mb-2">
-      <h3 class="text-black text-xl font-bold" aria-label="Review Score">Review Score: <span class="text-yellow-500" aria-label="9.5">9.5</span> (Outstanding)</h3>
-    </div>
+        <!-- Title -->
+        <h2 class="text-lg font-semibold mb-2">{{ game.name }}</h2>
 
-    <!-- Platform -->
-    <div class="flex justify-between items-center mb-2">
-      <p class="text-gray-700 text-sm" aria-label="Platforms">Platforms: PS4, PS5, Windows, Xbox One, Xbox Series X/S</p>
-    </div>
-    <!-- Review extract -->
-    <p class="text-gray-700 mt-2 mb-4">This item is a brief description that provides context about the image and its significance in the collection. It is important to understand the value it adds.</p>
-    <!-- Read More Link -->
-    <a href="#" class="text-blue-500 hover:underline mt-2 inline-block" aria-label="Read more about Elden Ring">Read more</a>
-  </div>
-</div>
+        <!-- Score -->
+        <p class="text-gray-700">
+          <strong>Score:</strong>
+          <span class="text-orange-500 font-bold float-right">{{ game.score }}</span>
+        </p>
 
-<!-- Carousel Item 3 -->
-<div class="bg-white shadow-lg rounded-lg p-4 min-w-[250px]">
-  <div class="flex flex-col">
-    <!-- title -->
-    <div class="flex justify-between items-center mb-2">
-      <h2 class="text-lg font-semibold">Witcher 3</h2>
-    </div>
-    <!-- Image -->
-    <img src="{{ url_for('static', filename='images/Witcher.jpg') }}" alt="The Witcher 3 cover art" class="h-48 w-full object-cover rounded-lg mb-4">
-    <!-- Score -->
-    <div class="flex justify-between items-center mb-2">
-      <h3 class="text-black text-xl font-bold" aria-label="Review Score">Review Score: <span class="text-yellow-500" aria-label="9.1">9.1</span> (Very Good)</h3>
-    </div>
-    <!-- Platform -->
-    <div class="flex justify-between items-center mb-2">
-      <p class="text-gray-700 text-sm" aria-label="Platforms">Platforms: PS4, PS5, Windows, Xbox One, Xbox Series X/S, Nintendo Switch</p>
-    </div>
-    <!-- Review extract -->
-    <p class="text-gray-700 mt-2 mb-4">This item is a brief description that provides context about the image and its significance in the collection. It is important to understand the value it adds.</p>
-    <!-- Read More Link -->
-    <a href="#" class="text-blue-500 hover:underline mt-2 inline-block" aria-label="Read more about The Witcher 3">Read more</a>
-  </div>
-</div>
+        <!-- Platforms -->
+        <p class="text-gray-700"><strong>Platforms:</strong> {{ game.platforms | join(', ') }}</p>
 
-<!-- Carousel Item 4 -->
-<div class="bg-white shadow-lg rounded-lg p-4 min-w-[250px]">
-  <div class="flex flex-col">
-    <!-- title -->
-    <div class="flex justify-between items-center mb-2">
-      <h2 class="text-lg font-semibold">Rogue Legacy</h2>
-    </div>
-    <!-- Image -->
-    <img src="{{ url_for('static', filename='images/RogueLegacy.jpg') }}" alt="Rogue Legacy cover art" class="h-48 w-full object-cover rounded-lg mb-4">
-    <!-- Score -->
-    <div class="flex justify-between items-center mb-2">
-      <h3 class="text-black text-xl font-bold" aria-label="Review Score">Review Score: <span class="text-yellow-500" aria-label="8.2">8.2</span> (Good)</h3>
-    </div>
-    <!-- Platform -->
-    <div class="flex justify-between items-center mb-2">
-      <p class="text-gray-700 text-sm" aria-label="Platforms">Platforms: PS4, PS5, Windows, Xbox One, Xbox Series X/S, Nintendo Switch, Mac. Linux</p>
-    </div>
-    <!-- Review extract -->
-    <p class="text-gray-700 mt-2 mb-4">This item is a brief description that provides context about the image and its significance in the collection. It is important to understand the value it adds.</p>
-    <!-- Read More Link -->
-    <a href="#" class="text-blue-500 hover:underline mt-2 inline-block" aria-label="Read more about Rogue Legacy">Read more</a>
-  </div>
-</div>
+        <!-- Genre -->
+        <p class="text-gray-700"><strong>Genre:</strong> {{ game.genre | join(', ') }}</p>
 
-<!-- testing layout -->
-<!-- Carousel Item 1 -->
-<div class="bg-white shadow-lg rounded-lg p-4 min-w-[250px]">
-  <div class="flex flex-col">
-    <!-- title -->
-    <div class="flex justify-between items-center mb-2">
-      <h2 class="text-lg font-semibold">Final Fantasy 7 Remake</h2>
-    </div>
-    <!-- Image -->
-    <img src="{{ url_for('static', filename='images/FF7.jpg') }}" alt="Final Fantasy 7 Remake cover art" class="h-48 w-full object-cover rounded-lg mb-4">
-    <!-- Score -->
-    <div class="flex justify-between items-center mb-2">
-      <h3 class="text-black text-xl font-bold" aria-label="Review Score">Review Score: <span class="text-yellow-500" aria-label="9.2">9.2</span> (Excellent)</h3>
-    </div>
-    <!-- Platform -->
-    <div class="flex justify-between items-center mb-2">
-      <p class="text-gray-700 text-sm" aria-label="Platforms">Platforms: PS4, PS5, Windows</p>
-    </div>
-    <!-- Review extract -->
-    <p class="text-gray-700 mt-2 mb-4">This item is a brief description that provides context about the image and its significance in the collection. It is important to understand the value it adds.</p>
-    <!-- Read More Link -->
-    <a href="#" class="text-blue-500 hover:underline mt-2 inline-block" aria-label="Read more about Final Fantasy 7 Remake">Read more</a>
-  </div>
-</div>
+        <!-- Release Date -->
+        <p class="text-gray-700"><strong>Release Date:</strong> {{ game.release_month }}/{{ game.release_year }}</p>
 
-<!-- Carousel Item 2 -->
-<div class="bg-white shadow-lg rounded-lg p-4 min-w-[250px]">
-  <div class="flex flex-col">
-    <!-- title -->
-    <div class="flex justify-between items-center mb-2">
-      <h2 class="text-lg font-semibold">Elden Ring</h2>
-    </div>
-    <!-- Image -->
-    <img src="{{ url_for('static', filename='images/EldenRing.jpg') }}" alt="Elden Ring cover art" class="h-48 w-full object-cover rounded-lg mb-4">
-    <!-- Score -->
-    <div class="flex justify-between items-center mb-2">
-      <h3 class="text-black text-xl font-bold" aria-label="Review Score">Review Score: <span class="text-yellow-500" aria-label="9.5">9.5</span> (Outstanding)</h3>
-    </div>
+        <!-- Publisher -->
+        <p class="text-gray-700"><strong>Publisher:</strong> {{ game.publisher }}</p>
 
-    <!-- Platform -->
-    <div class="flex justify-between items-center mb-2">
-      <p class="text-gray-700 text-sm" aria-label="Platforms">Platforms: PS4, PS5, Windows, Xbox One, Xbox Series X/S</p>
-    </div>
-    <!-- Review extract -->
-    <p class="text-gray-700 mt-2 mb-4">This item is a brief description that provides context about the image and its significance in the collection. It is important to understand the value it adds.</p>
-    <!-- Read More Link -->
-    <a href="#" class="text-blue-500 hover:underline mt-2 inline-block" aria-label="Read more about Elden Ring">Read more</a>
-  </div>
-</div>
+        <!-- Developer -->
+        <p class="text-gray-700"><strong>Developer:</strong> {{ game.developer }}</p>
 
-<!-- Carousel Item 3 -->
-<div class="bg-white shadow-lg rounded-lg p-4 min-w-[250px]">
-  <div class="flex flex-col">
-    <!-- title -->
-    <div class="flex justify-between items-center mb-2">
-      <h2 class="text-lg font-semibold">Witcher 3</h2>
-    </div>
-    <!-- Image -->
-    <img src="{{ url_for('static', filename='images/Witcher.jpg') }}" alt="The Witcher 3 cover art" class="h-48 w-full object-cover rounded-lg mb-4">
-    <!-- Score -->
-    <div class="flex justify-between items-center mb-2">
-      <h3 class="text-black text-xl font-bold" aria-label="Review Score">Review Score: <span class="text-yellow-500" aria-label="9.1">9.1</span> (Very Good)</h3>
-    </div>
-    <!-- Platform -->
-    <div class="flex justify-between items-center mb-2">
-      <p class="text-gray-700 text-sm" aria-label="Platforms">Platforms: PS4, PS5, Windows, Xbox One, Xbox Series X/S, Nintendo Switch</p>
-    </div>
-    <!-- Review extract -->
-    <p class="text-gray-700 mt-2 mb-4">This item is a brief description that provides context about the image and its significance in the collection. It is important to understand the value it adds.</p>
-    <!-- Read More Link -->
-    <a href="#" class="text-blue-500 hover:underline mt-2 inline-block" aria-label="Read more about The Witcher 3">Read more</a>
-  </div>
-</div>
+        <!-- Rating -->
+        <p class="text-gray-700"><strong>Rating:</strong> {{ game.rating }}</p>
 
-<!-- Carousel Item 4 -->
-<div class="bg-white shadow-lg rounded-lg p-4 min-w-[250px]">
-  <div class="flex flex-col">
-    <!-- title -->
-    <div class="flex justify-between items-center mb-2">
-      <h2 class="text-lg font-semibold">Rogue Legacy</h2>
-    </div>
-    <!-- Image -->
-    <img src="{{ url_for('static', filename='images/RogueLegacy.jpg') }}" alt="Rogue Legacy cover art" class="h-48 w-full object-cover rounded-lg mb-4">
-    <!-- Score -->
-    <div class="flex justify-between items-center mb-2">
-      <h3 class="text-black text-xl font-bold" aria-label="Review Score">Review Score: <span class="text-yellow-500" aria-label="8.2">8.2</span> (Good)</h3>
-    </div>
-    <!-- Platform -->
-    <div class="flex justify-between items-center mb-2">
-      <p class="text-gray-700 text-sm" aria-label="Platforms">Platforms: PS4, PS5, Windows, Xbox One, Xbox Series X/S, Nintendo Switch, Mac. Linux</p>
-    </div>
-    <!-- Review extract -->
-    <p class="text-gray-700 mt-2 mb-4">This item is a brief description that provides context about the image and its significance in the collection. It is important to understand the value it adds.</p>
-    <!-- Read More Link -->
-    <a href="#" class="text-blue-500 hover:underline mt-2 inline-block" aria-label="Read more about Rogue Legacy">Read more</a>
+        <!-- Awards -->
+        <p class="text-gray-700"><strong>Awards:</strong> {{ game.awards | join(', ') }}</p>
+
+        <!-- Review Extract -->
+        <p class="text-gray-700 mb-4">{{ game.review_extract }}</p>
+
+        <!-- Read More Link -->
+        <a href="{{ game.link }}" class="text-blue-500 hover:underline">Read More</a>
+      </div>
+    {% endfor %}
   </div>
 </div>
