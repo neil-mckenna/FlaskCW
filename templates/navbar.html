@@ -1,13 +1,12 @@
-<nav class="bg-gray-800 p-4">
+<nav class="bg-gray-800 p-4 text-3xl font-semibold">
         <div class="container mx-auto flex justify-between items-center">
-        <div class="text-white text-lg font-bold">Neil's Reviews</div>
+        <div class="text-white" ><a href="{{ url_for('home') }}" class="hover:text-gray-400 hover:underline">Neil's Reviews</a></div>
         <ul class="flex space-x-6 text-white">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="#" class="hover:text-gray-400">Latest</a></li>
-            <li><a href="#" class="hover:text-gray-400">Top 10</a></li>
-            <li><a href="#" class="hover:text-gray-400">All Reviews</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="#" class="hover:text-gray-400">Login</a></li>
+            <li><a href="{{ url_for('latest') }}" class="hover:text-gray-400 hover:underline">Latest</a></li>
+            <li><a href="{{ url_for('top_10') }}" class="hover:text-gray-400 hover:underline">Top 10</a></li>
+            <li><a href="{{ url_for('all_reviews') }}" class="hover:text-gray-400 hover:underline">All Reviews</a></li>
+            <li><a href="{{ url_for('about') }}"  class="hover:text-gray-400 hover:underline">About</a></li>
+            <li><a href="#" class="hover:text-gray-400 hover:underline">Login</a></li>
         </ul>
         </div>
 </nav>

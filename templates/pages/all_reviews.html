@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="bg-gray-300 text-white text-lg container my-3 mx-auto rounded rounded-lg p-3 text-center">
+        <div class="flex justify-between mb-4">
+            <h1 class="text-3xl font-bold">Game Reviews</h1>
+
+            <h2 class="text-3xl font-bold">Platform: {{ selected_platform | upper }}</h2>
+
+            <!-- Sort Option -->
+            <div class="flex justify-between items-center mb-4 border-2 border-gray-500 rounded rounded-lg p-2">
+                <h3 class="text-center font-bold mx-3">Select a Sort Option</h3>
+                <select id="sort-select" class="border p-2 rounded" onchange="updateSortOrder()">
+                    <option value="score" {% if request.args.get('sort_by') == 'score' %}selected{% endif %}>Sort by Score</option>
+                    <option value="release_date" {% if request.args.get('sort_by') == 'release_date' %}selected{% endif %}>Sort by Latest Review</option>
+                    <option value="genre" {% if request.args.get('sort_by') == 'genre' %}selected{% endif %}>Sort by Genre</option>
+
+                    <!-- Platform group -->
+                    <optgroup label="Platforms">
+                        <option value="platform_ps4" {% if request.args.get('sort_by') == 'platform_ps4' %}selected{% endif %}>Sort by PS4</option>
+                        <option value="platform_ps5" {% if request.args.get('sort_by') == 'platform_ps5' %}selected{% endif %}>Sort by PS5</option>
+                        <option value="platform_xbox_one" {% if request.args.get('sort_by') == 'platform_xbox_one' %}selected{% endif %}>Sort by Xbox One</option>
+                        <option value="platform_xbox_series_x/s" {% if request.args.get('sort_by') == 'platform_xbox_one_x_s' %}selected{% endif %}>Sort by Xbox One X/S</option>
+                        <option value="platform_xbox" {% if request.args.get('sort_by') == 'platform_xbox_one' %}selected{% endif %}>Sort by Xbox</option>
+                        <option value="platform_nintendo_switch" {% if request.args.get('sort_by') == 'platform_nintendo_switch' %}selected{% endif %}>Sort by Nintendo Switch </option>
+                        <option value="platform_windows" {% if request.args.get('sort_by') == 'platform_windows' %}selected{% endif %}>Sort by Windows</option>
+                        <option value="platform_linux" {% if request.args.get('sort_by') == 'platform_linux' %}selected{% endif %}>Sort by Linux</option>
+                        <option value="platform_mac" {% if request.args.get('sort_by') == 'platform_mac' %}selected{% endif %}>Sort by Mac</option>
+                        <option value="platform_mobile" {% if request.args.get('sort_by') == 'platform_mobile' %}selected{% endif %}>Sort by Mobile</option>
+                    </optgroup>
+                </select>
+
+                <!-- ['Linux', 'Mac', 'Mobile', 'Nintendo Switch', 'PC', 'PC VR', 'PS4', 'PS5', 'Windows', 'Xbox', 'Xbox One', 'Xbox Series X/S'] -->
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {% for review in reviews %}
+            <div class="bg-white p-4 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold">{{ review.name }}</h2>
+                <p class="text-gray-700">Score: {{ review.score }}</p>
+                <p class="text-gray-700">Platform: {{ review.platforms | join(', ') }}</p>
+                <p class="text-gray-700">Genre: {{ review.genre }}</p>
+                <p class="text-gray-700">Release Date: 01/{{ review.release_month }}/{{ review.release_year }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <script>
+        function updateSortOrder() {
+            const sortBy = document.getElementById("sort-select").value;
+            window.location.href = `/all_reviews?sort_by=${sortBy}`;
+        }
+    </script>
+
+{% endblock %}

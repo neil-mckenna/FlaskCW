@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="bg-gray-200 rounded rounded-lg mt-4 mb-6 border-4 border-gray-200 p-4">
+        <h2 class="text-center text-3xl font-boldest p-3 mx-auto mt-2 mb-7 bg-green-800 text-white italic rounded rounded-lg">Top 10 reviews</h2>
+
+        <div class="flex flex-wrap gap-x-1 gap-y-4">
+            {% for review in reviews %}
+                <!--  card div -->
+                <div class="max-w-md mx-auto mb-4 bg-white rounded-lg shadow-md overflow-hidden p-4 border border-3">
+                    <h3 class="text-2xl font-semibold  text-gray-800 text-center my-3 p-2 border border-2"><em>{{ review.name }}</em></h3>
+                    <img class="w-full h-48 object-cover mt-2" src="{{ url_for('static', filename='images/' + review.image) }}" alt="{{ review.name }} cover art">
+                    <div class="p-4">
+                        <p class="text-2xl font-bold text-orange-500 my-2">
+                            Review Score : {{ review.score }}
+                        </p>
+                        <p class="text-gray-700 font-bold my-2"><em class="text-1xl">Platforms:   </em> {{ review.platforms | join(', ') }}</p>
+
+                        <p class="mt-2 text-md text-gray-600">
+                            {{ review.review_extract }}
+                        </p>
+                    <div class="mt-4 flex justify-between items-center">
+                      <a href="{{ url_for('individual_review', id=review.id) }}"  class="text-indigo-500 hover:underline text-sm font-medium">Read More</a>
+                      <span class="text-sm text-gray-500">Reviewed On {{ review.review_date | dateformat }}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- end of card -->
+
+
+            <!-- end of review loop -->
+            {% endfor %}
+
+        </div>
+
+    <!-- background end div -->
+    </div>
+
+{% endblock %}
