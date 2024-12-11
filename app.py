@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response
+from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response, flash, session
 import os
 import json
 from datetime import datetime
@@ -8,6 +8,9 @@ from datetime import datetime
 # start a Flask class constructed with app name which is this app.py
 app = Flask(__name__)
 
+# this is needed for flashing messages
+app.secret_key = "mehthisisecretkey44"
+
 
 # a helper filter to show dates
 @app.template_filter('dateformat')
@@ -16,6 +19,26 @@ def dateformat(value):
 
 # hard code const for the data file in my project for teh json data
 DATA_FILE = os.path.join(os.path.dirname(__file__), 'static/jsonData','games.json')
+
+# user data
+USER_DATA_FILE = os.path.join(os.path.dirname(__file__), 'static/jsonData','users.json')
+
+# load user data from JSOn file
+def load_user_data():
+    response, status_code = read_json_file(USER_DATA_FILE)
+
+    if status_code == 200:
+        # load users
+        return response.get("data", {"users": []})
+
+    # for error
+    return {"users" : [] }
+
+
+# save user data to JSON file
+def save_user_data(data):
+    with open(USER_DATA_FILE, "w") as f:
+        json.dump(data, f, indent=4)
 
 
 # a useful fucntion to extract josn data from a file as will reuse in multiple routes
@@ -52,10 +75,86 @@ def read_json_file(file_path):
 
 
 # start of routes
+@app.route('/register', methods=['GET','POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        # load exist users
+        user_data = load_user_data()
+
+        # if user already exists
+        if any(user['username'] == username for user in user_data['users']):
+            flash("Username already exists. Please choose a different one.", "danger")
+            return redirect(url_for('register'))
+
+        # add new users
+        user_data['users'].append({"username": username, "password": password})
+        save_user_data(user_data)
+
+        flash("Registration successful! Please log in: ", "success")
+        return redirect(url_for('login'))
+
+    return render_template('pages/security/register.html')
+
+# login logic
+@app.route('/login', methods=['GET','POST'])
+def login():
+
+    # hard code values for login
+    H_USERNAME = "neil"
+    H_PASSWORD = "password"
+
+    # check for a post request
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        # check against hardcoded values
+        if username == H_USERNAME and password == H_PASSWORD:
+            session['logged_in'] = True # set login status
+            session['username'] = username
+
+            # flash green
+            flash("Login Successfully", "success")
+            return redirect(url_for('home'))
+
+        user_data = load_user_data()
+        # this is  fancy lamda/forloop to compare usernames
+        user = next((user for user in user_data['users'] if user['username'] == username), None)
+
+        # if user password in key match the password
+        if user and user['password'] == password:
+            session['logged_in'] = True
+            session['username'] = username
+            flash("login successfully", "success")
+            return redirect(url_for('home'))
+
+        # failed both
+        else:
+            flash("Invalid details: username and or password. Please Try Again!", "danger")
+            return redirect(url_for('login') )
+
+    return render_template("pages/security/login.html")
+
+# logout
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    session.pop('username', None)
+    flash("You have been logged out", "info")
+    session.clear()
+    return redirect(url_for('login'))
 
 # deafult root or home index
 @app.route('/')
 def home():
+
+    # redirect to login security reasons
+    if not session.get('logged_in', False):
+        return redirect(url_for('login'))
+
     # destruture function call with const from above
     response, status_code = read_json_file(DATA_FILE)
 
@@ -65,7 +164,10 @@ def home():
     # if success
     if status_code == 200:
         # return page with data passed
-        return render_template('pages/index.html', games=response["data"])
+        return render_template(
+            'pages/index.html',
+            games=response["data"],
+            logged_in=session.get('logged_in', False))
     else:
         # return error message, status
         return jsonify(response), status_code

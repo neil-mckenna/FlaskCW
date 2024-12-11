@@ -1,12 +1,70 @@
-<nav class="bg-gray-800 p-4 text-3xl font-semibold">
-        <div class="container mx-auto flex justify-between items-center">
-        <div class="text-white" ><a href="{{ url_for('home') }}" class="hover:text-gray-400 hover:underline">Neil's Reviews</a></div>
-        <ul class="flex space-x-6 text-white">
+<nav class="bg-gray-800 p-4">
+
+    <div class="container mx-auto flex justify-between items-center text-2xl text-bold italic">
+
+        <!-- home  -->
+        <div class="text-white text-2xl font-semibold md:ml-10 lg:ml-14 ">
+            <a href="{{ url_for('home') }}" class="hover:text-gray-400 hover:underline">Neil's Reviews</a>
+
+
+        </div>
+
+        <!-- hamburger btn -->
+        <button
+            id="nav-toggle"
+            class="text-white text-2xl focus:outline-none md:hidden"
+            aria-expanded="false"
+            aria-controls="nav-menu"
+            onclick="toggleNavMenu()">
+            <span class="sr-only">Toggle navigation</span>
+            &#9776; <!-- hamburger unicode  -->
+        </button>
+
+        <!-- nav Links -->
+        <ul
+            id="nav-menu"
+            class="hidden flex-col md:flex md:flex-row space-y-4 md:space-y-0 md:space-x-6 text-white mt-4 md:mt-0 transition-all duration-300 ease-in-out">
             <li><a href="{{ url_for('latest') }}" class="hover:text-gray-400 hover:underline">Latest</a></li>
             <li><a href="{{ url_for('top_10') }}" class="hover:text-gray-400 hover:underline">Top 10</a></li>
             <li><a href="{{ url_for('all_reviews') }}" class="hover:text-gray-400 hover:underline">All Reviews</a></li>
-            <li><a href="{{ url_for('about') }}"  class="hover:text-gray-400 hover:underline">About</a></li>
-            <li><a href="#" class="hover:text-gray-400 hover:underline">Login</a></li>
+            <li><a href="{{ url_for('about') }}" class="hover:text-gray-400 hover:underline">About</a></li>
+
+            <li><a>
+                {% if logged_in %}
+                    <p>User:{{ session['username'] }}</p>
+                {% else %}
+                    <p>No user logged in</p>
+                {% endif %}
+            </a></li>
+
+            {% if logged_in %}
+                <li><a href="{{ url_for('logout') }}" class="hover:text-gray-400 hover:underline">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}" class="hover:text-gray-400 hover:underline">Login</a></li>
+            {% endif %}
         </ul>
-        </div>
+    </div>
 </nav>
+
+<script>
+    function toggleNavMenu()
+    {
+        // grab the element nav-menu
+        const navMenu = document.getElementById("nav-menu");
+
+        // grab the element nav-toggle
+        const navToggle = document.getElementById("nav-toggle");
+
+        // grab the bool of teh aria
+        const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+
+        // Toggle hidden class
+        navMenu.classList.toggle("hidden");
+
+        // Update aria-expanded attribute
+        navToggle.setAttribute("aria-expanded", !isExpanded);
+
+        // Toggle hamburger and close icons unicode
+        navToggle.innerHTML = isExpanded ? "&#9776;" : "&times;";
+    }
+</script>
